@@ -1,75 +1,49 @@
-#Una transportadora requiere el desarrollo de una aplicacion que permita llevar un registro de los despachos de un vehiculo teniendo en cuenta lo siguiente:
+import os
+n_Despachos = 0
+diccionario_registo = {}
+sw = True
+def fnt_agregar(diccionario, placa, descripcion_vehiculo, nombre, contacto, ruta, descripcion_carga  ):
+    global n_Despachos
+    if placa == '' or descripcion_vehiculo == '' or nombre == '' or contacto == '' or ruta == '' or descripcion_carga == '':
+        enter = input('debe de diligenciar toda la informacion solicitadad <ENTER>')
+    else :
+        diccionario[placa] = {'Descipción del vehiculo': descripcion_vehiculo, 'nombre': nombre, 'contacto': contacto, 'ruta': ruta, 'descripcion de la carga': descripcion_carga}
+        n_Despachos += 1
+    enter = input(f'\nEl vehiculo {placa} ha sido registrado con exito <ENTER>')
 
-#-Placa del vehiculo
-#-Placa de descripcion del vehiculo
-#-Nombre del conductor
-#-Contacto del conductor
-#-Ruta
 
-#-Descripcion de la carga; el numero de despacho se genera de forma automatica, es decir una variable incrementable. Dicha informacion debe queda registrada en un diccionario.
+def fnt_consultar():
+    global diccionario_registo
+    os.system('cls')
+    print('\nCantidad de registros: ',n_Despachos,'\n')
+    for key, valor in diccionario_registo.items():
+        print(f'Numero de placa: {key}')
+        print(f'{valor}')
+    enter = input('\n\nPresione ENTER para continuar...')
 
-#El sistema debe realizar:
 
-#Registro de salidas y mostrar salir
+def fnt_selector(opcion):
+    global sw
+    global diccionario_registo
 
-# Registro de despachos de vehiculo
+    if opcion == '1':
+        os.system('cls')
+        nombre = input('Nombre del conductor: ')
+        placa = input('número de placa del vehiculo: ')
+        contacto = input('Número de contacto: ')
+        descripcion_vehiculo = input('Descrión del vehiculo: ')
+        descripcion_carga = input('Descripción de carga: ')
+        ruta = input('Ruta a recorrer: ')
+        fnt_agregar (diccionario_registo, placa, descripcion_vehiculo, nombre, contacto, ruta, descripcion_carga)
 
-# Diccionario para almacenar los datos de los despachos
+    elif opcion == '2':
+        fnt_consultar()
 
-registro_despachos = {}
-numero_despacho = 1
+    elif opcion == '3':
+        sw = False
 
-def registrar_salida():
-    global numero_despacho
-    try:
-        # Preguntas basicas  
-        placa_vehiculo = input("Ingrese la Placa del vehiculo: ")
-        descripcion_vehiculo = input("Ingrese la Placa de descripcion del vehiculo: ")
-        nombre_conductor = input("Ingrese el Nombre del conductor: ")
-        contacto_conductor = input("Ingrese el Contacto del conductor: ")
-        ruta = input("Ingrese la Ruta: ")
-        carga = input("Ingrese la Descripcion de la carga: ")
 
-        despacho = {
-            "Placa del vehiculo": placa_vehiculo,
-            "Placa de descripcion del vehiculo": descripcion_vehiculo,
-            "Nombre del conductor": nombre_conductor,
-            "Contacto del conductor": contacto_conductor,
-            "Ruta": ruta,
-            "Carga": carga
-        }
-        #Recomendacion de boxblack
-        registro_despachos[numero_despacho] = despacho
-        numero_despacho += 1
-        print("Registro de salida exitoso.")
-    except Exception as e:
-        print("Ha ocurrido un error:", e)
-
-def mostrar_salidas():
-    print("--- REGISTRO DE SALIDA ---")
-    if registro_despachos:
-        for numero_despacho, despacho in registro_despachos.items():
-            print(f"Número de Despacho: {numero_despacho}")
-            for clave, valor in despacho.items():
-                print(f"{clave}: {valor}")
-            print("--------------------------")
-    else:
-        print("No hay registros de salida.")
-
-# Menú principal para que le pregunte al usuario cuando quiera ingresar o ver las salidas :P
-while True:
-    print("\n ---MENU PRINCIPAL DE REGISTRO --- :")
-    print("1. Registro de salida")
-    print("2. Mostrar salidas")
-    print("3. Salir")
-    opcion = input("Seleccione una opción: ")
-
-    if opcion == "1":
-        registrar_salida()
-    elif opcion == "2":
-        mostrar_salidas()
-    elif opcion == "3":
-        print("Saliendo del programa.")
-        break
-    else:
-        print("Opción no válida. Por favor, seleccione una opción que si sea válida para hacer el registro.")
+while sw == True: 
+    os.system('cls')
+    opcion = input('1. Registrar\n2. Mostrar\n3. Salir\n- >  ')
+    fnt_selector(opcion)
